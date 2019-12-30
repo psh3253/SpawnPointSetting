@@ -1,0 +1,2 @@
+# SpawnPointSetting
+Set spawn point.

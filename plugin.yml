@@ -1,0 +1,15 @@
+name: SpawnPointSetting
+main: astar\SpawnPointSetting\SpawnPointSetting
+version: 1.0.0
+api:
+  - 3.11.1
+  - 3.11.2
+  - 3.11.3
+permissions:
+  spawnpointsetting.spawn:
+    default: true
+  spawnpointsetting.setspawn:
+    default: op
+  spawnpointsetting.spawnclear:
+    default: op
+
