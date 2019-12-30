@@ -33,8 +33,6 @@ class SpawnPointSetting extends PluginBase implements Listener
         $this->registerCommand("스폰", "spawnpointsetting.spawn", "설정된 스폰지점으로 이동합니다", "/스폰");
         $this->registerCommand("스폰설정", "spawnpointsetting.setspawn", "스폰지점을 설정합니다.", "/스폰설정");
         $this->registerCommand("스폰초기화", "spawnpointsetting.spawnclear", "스폰지점을 초기화합니다.", "/스폰초기화");
-
-        $this->getServer()->getPluginManager()->registerEvents($this, $this);
     }
 
     public function onDisable()

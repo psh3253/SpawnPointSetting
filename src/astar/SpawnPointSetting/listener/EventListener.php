@@ -19,45 +19,45 @@ class EventListener implements Listener
      */
     private $plugin;
 
-    private $spawn_queue = [];
-    private $death_queue = [];
+    public $spawn_queue = [];
+    public $death_queue = [];
 
     public function __construct(SpawnPointSetting $plugin)
     {
         $this->plugin = $plugin;
+        $plugin->getServer()->getPluginManager()->registerEvents($this, $plugin);
     }
 
     public function onReSpawn(PlayerRespawnEvent $event)
     {
-        if (isset ($this->death_queue [$event->getPlayer()->getName()])) {
-            $pos = $this->plugin->getSpawn();
+        if (isset ( $this->death_queue [$event->getPlayer ()->getName ()] )) {
+            $pos = $this->plugin->getSpawn ();
             if ($pos != null)
-                $this->plugin->getScheduler()->scheduleDelayedTask(new SpawnPointSettingTask($this->plugin, $event->getPlayer(), $pos [0]), 20);
-            unset ($this->death_queue [$event->getPlayer()->getName()]);
+                $this->plugin->getScheduler ()->scheduleDelayedTask ( new SpawnPointSettingTask ( $this->plugin, $event->getPlayer (), $pos [0] ), 20 );
+            unset ( $this->death_queue [$event->getPlayer ()->getName ()] );
         }
     }
 
-    public function onDeath(PlayerDeathEvent $event)
-    {
-        if (!isset ($this->death_queue [$event->getEntity()->getName()]))
-            $this->death_queue [$event->getEntity()->getName()] = 1;
+    public function onDeath(PlayerDeathEvent $event) {
+        if (! isset ( $this->death_queue [$event->getEntity ()->getName ()] ))
+            $this->death_queue [$event->getEntity ()->getName ()] = 1;
     }
 
     public function onLogin(PlayerLoginEvent $event)
     {
-        $defaultLevel = $this->plugin->getServer()->getDefaultLevel();
-        if ($event->getPlayer()->getLevel()->getName() == $defaultLevel->getName()) {
-            if ($event->getPlayer()->x == $defaultLevel->getSpawnLocation()->x)
-                if ($event->getPlayer()->y == $defaultLevel->getSpawnLocation()->y)
-                    if ($event->getPlayer()->z == $defaultLevel->getSpawnLocation()->z)
+        $defaultLevel = $this->plugin->getServer ()->getDefaultLevel ();
+        if ($event->getPlayer ()->getLevel ()->getName () == $defaultLevel->getName ()) {
+            if ($event->getPlayer ()->x == $defaultLevel->getSpawnLocation ()->x)
+                if ($event->getPlayer ()->y == $defaultLevel->getSpawnLocation ()->y)
+                    if ($event->getPlayer ()->z == $defaultLevel->getSpawnLocation ()->z)
                         return;
         }
 
-        if (!isset ($this->spawn_queue [$event->getPlayer()->getName()])) {
-            $this->spawn_queue [$event->getPlayer()->getName()] = 1;
-            $pos = $this->plugin->getSpawn();
+        if (! isset ( $this->spawn_queue [$event->getPlayer ()->getName ()] )) {
+            $this->spawn_queue [$event->getPlayer ()->getName ()] = 1;
+            $pos = $this->plugin->getSpawn ();
             if ($pos != null)
-                $event->getPlayer()->teleport($pos [0], $pos [1], $pos [2]);
+                $event->getPlayer ()->teleport ( $pos [0], $pos [1], $pos [2] );
         }
     }
 
